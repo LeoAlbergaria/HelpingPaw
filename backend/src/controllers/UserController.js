@@ -2,21 +2,29 @@ const User = require('../models/UserModel');
 
 class UserController {
   async createUser(req, res) {
-    const {
-      login, senha, confirmSenha, nome, telefone,
-    } = req.body;
     try {
-      const user = new User(login, senha, confirmSenha, nome, telefone);
-      // Armazena na base de dados
-      user.dbStore();
+      const {
+        login, senha, confirmSenha, nome, email, telefone,
+      } = req.body;
 
-      // Envia o user para o front
-      res.json(user);
-      
-      return user;
+      const valid = await User.validateUser(login, senha, confirmSenha, nome, email, telefone);
+      // const msg = new User(login, senha, confirmSenha, nome, email, telefone);
+
+      if(valid !== true) {
+        res.status(422).json(valid);
+        return;
+      }
+
+      console.log(`Usuario ${nome} validado`);
+
+      const senhaHash = User.encryptSenha(senha);
+
+      User.dbStore(login, senhaHash, nome, email, telefone)
+        .then(res.status(201).json({ msg: 'Usuário cadastrado com sucesso!' }));
+
     } catch (erro) {
-      res.status(422).json({ msg: erro });
-      return null;
+      console.log(erro);
+      res.status(500).json({ msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.' });
     }
   }
 }

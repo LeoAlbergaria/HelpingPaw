@@ -16,7 +16,6 @@ class App {
 
   routes() {
     this.app.use('/', homeRoutes, userRoutes);
-    // this.app.use('/', userRoutes);
   }
 }
 
