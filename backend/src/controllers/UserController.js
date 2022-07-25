@@ -1,4 +1,5 @@
 const User = require('../models/UserModel');
+const jwt = require('jsonwebtoken');
 
 class UserController {
   async createUser(req, res) {
@@ -8,11 +9,9 @@ class UserController {
       } = req.body;
 
       const valid = await User.validateUser(login, senha, confirmSenha, nome, email, telefone);
-      // const msg = new User(login, senha, confirmSenha, nome, email, telefone);
 
       if(valid !== true) {
-        res.status(422).json(valid);
-        return;
+        return res.status(422).json(valid);
       }
 
       console.log(`Usuario ${login} validado`);
@@ -24,31 +23,63 @@ class UserController {
 
     } catch (erro) {
       console.log(erro);
-      res.status(500).json({ msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.' });
+      return res.status(500).json({ msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.' });
     }
   }
 
   async authUser(req, res) {
-    const { login, senha } = req.body;
+    try {
+      const { login, senha } = req.body;
 
-    const valid = User.validateLogin(login, senha);
+      const valid = User.validateLogin(login, senha);
 
-    if(valid !== true) {
-      res.status(422).json(valid);
-      return;
+      if(valid !== true) {
+        return res.status(422).json(valid);
+      }
+
+      const usuario = await User.loginExists(login);
+
+      if(usuario === false) {
+        return res.status(404).json({ msg: 'Login ou Senha inválidos.' });
+      }
+
+      console.log(`Login ${login} validado`);
+
+      const checkSenha = await User.checkSenha(usuario, senha);
+
+      if(!checkSenha) {
+        return res.status(404).json({ msg: 'Login ou Senha inválidos.' });
+      }
+
+      const secret = process.env.SECRET;
+
+      const token = jwt.sign(
+        {
+          id: usuario._id,
+        },
+        secret
+      );
+
+      return res.status(200).json({ msg: 'Autenticação realizada com sucesso', token })
+
+    } catch(erro) {
+      console.log(erro);
+      return res.status(500).json({ msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.' });
+    }
+  }
+
+  async privateGetUser(req, res) {
+
+    // Enviado da URL
+    const id = req.params.id;
+
+    const user = await User.idExists(id);
+
+    if(user === false) {
+      return res.status(404).json({ msg: 'Usuário não encontrado' });
     }
 
-    const usuario = await User.loginExists(login);
-
-    if(usuario === false) {
-      res.status(422).json({ msg: 'Login ou Senha inválidos.' });
-      return;
-    }
-
-    console.log(`Login ${login} validado`);
-
-    
-
+    return res.status(202).json({ user });
   }
 }
 

@@ -25,6 +25,17 @@ class User {
     return user === null ? false : user;
   }
 
+  // Retorna falso se não existe usuário, retorna o usuário caso contrário
+  async idExists(id) {
+    const user = await userModel.findById(id, '-senha');
+    return user === null ? false : user;
+  }
+
+  // Verifica se a senha fornecida corresponde à senha do usuário
+  async checkSenha(usuario, senha) {
+    return await bcrypt.compare(senha, usuario.senha);
+  }
+
   validateLogin(login, senha) {
     if (!login || login === '' || login === undefined) {
       return { msg: 'Insira um login' };
