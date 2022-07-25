@@ -15,7 +15,7 @@ class UserController {
         return;
       }
 
-      console.log(`Usuario ${nome} validado`);
+      console.log(`Usuario ${login} validado`);
 
       const senhaHash = await User.encryptSenha(senha);
 
@@ -26,6 +26,29 @@ class UserController {
       console.log(erro);
       res.status(500).json({ msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.' });
     }
+  }
+
+  async authUser(req, res) {
+    const { login, senha } = req.body;
+
+    const valid = User.validateLogin(login, senha);
+
+    if(valid !== true) {
+      res.status(422).json(valid);
+      return;
+    }
+
+    const usuario = await User.loginExists(login);
+
+    if(usuario === false) {
+      res.status(422).json({ msg: 'Login ou Senha inválidos.' });
+      return;
+    }
+
+    console.log(`Login ${login} validado`);
+
+    
+
   }
 }
 

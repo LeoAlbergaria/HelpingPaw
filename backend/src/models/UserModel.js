@@ -11,21 +11,21 @@ const userSchema = new mongoose.Schema({
 
 const userModel = mongoose.model('User', userSchema);
 
-async function loginExists(login) {
-  return (await userModel.findOne({ login: login }) !== null);
-}
-
-async function emailExists(email) {
-  return (await userModel.findOne({ email: email }) !== null)
-}
-
-
-
-
-
 class User {
 
-  async validateUser(login, senha, confirmSenha, nome, email, telefone) {
+  // Retorna falso se não existe usuário, retorna o usuário caso contrário
+  async loginExists(login) {
+    const user = await userModel.findOne({ login });
+    return user === null ? false : user;
+  }
+
+  // Retorna falso se não existe usuário, retorna o usuário caso contrário
+  async emailExists(email) {
+    const user = await userModel.findOne({ email });
+    return user === null ? false : user;
+  }
+
+  validateLogin(login, senha) {
     if (!login || login === '' || login === undefined) {
       return { msg: 'Insira um login' };
     } else if (!(typeof login === 'string')) {
@@ -36,6 +36,15 @@ class User {
     } else if (!(typeof senha === 'string')) {
       return { msg: 'Senha precisa ser uma String' };
     }
+
+    return true;
+  }
+
+  async validateUser(login, senha, confirmSenha, nome, email, telefone) {
+    
+    this.validateLogin(login, senha);
+
+
     if (!confirmSenha || confirmSenha === '' || confirmSenha === undefined) {
       console.log('Missing confirmSenha parameter');
       return { msg: 'Insira uma senha para confirmar' };
@@ -62,14 +71,14 @@ class User {
       return { msg: 'Senhas não coincidem' };
     }
 
-    const checkLogin = await loginExists(login);
-    const checkEmail = await emailExists(email);
+    const checkLogin = await this.loginExists(login);
+    const checkEmail = await this.emailExists(email);
 
-    if(checkLogin === true) {
+    if(checkLogin !== false) {
       return { msg: 'Login em uso' };
     }
 
-    if(checkEmail === true) {
+    if(checkEmail !== false) {
       return { msg: 'E-mail em uso' };
     }
 
