@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
   login: { type: String, required: true },
-  senha: { type: Object, required: true },
+  senha: { type: String, required: true },
   nome: { type: String, required: true },
   email: { type: String, required: true },
   telefone: { type: String, required: true }, // Criar um tipo específico para telefone

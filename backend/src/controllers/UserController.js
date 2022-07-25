@@ -17,7 +17,7 @@ class UserController {
 
       console.log(`Usuario ${nome} validado`);
 
-      const senhaHash = User.encryptSenha(senha);
+      const senhaHash = await User.encryptSenha(senha);
 
       User.dbStore(login, senhaHash, nome, email, telefone)
         .then(res.status(201).json({ msg: 'Usuário cadastrado com sucesso!' }));
