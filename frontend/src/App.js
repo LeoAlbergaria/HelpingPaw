@@ -1,8 +1,12 @@
+import React from 'react';
 
+import './global.css';
+
+import Paths from './routes';
 
 function App() {
   return (
-    <h1>Hello World!</h1>
+    <Paths /> 
   );
 }
 
