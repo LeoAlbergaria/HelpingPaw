@@ -6,7 +6,10 @@ require('dotenv').config();
 
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTIONSTRING, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
   .then(() => {
     console.log('Conexão com a base de dados estabelecida.');
     app.emit('DatabaseOn');
