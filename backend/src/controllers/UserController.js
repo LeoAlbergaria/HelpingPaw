@@ -14,10 +14,25 @@ class UserController {
       } = req.body;
 
       const valid = await User.validateUser(login, senha, confirmSenha, nome, email, telefone);
-
       if (valid !== true) {
         return res.status(422).json(valid);
       }
+
+      const checkLogin = await User.loginExists(login);
+      const checkEmail = await User.emailExists(email);
+
+      if (checkLogin !== false) {
+        return {
+          msg: 'Login em uso'
+        };
+      }
+
+      if (checkEmail !== false) {
+        return {
+          msg: 'E-mail em uso'
+        };
+      }
+
 
       console.log(`Usuario ${login} validado`);
 
@@ -89,8 +104,6 @@ class UserController {
   }
 
   async getUser(req, res) {
-    console.log('Chegou aqui');
-
     // Enviado da URL
     const login = req.params.login;
 

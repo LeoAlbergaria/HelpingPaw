@@ -151,21 +151,6 @@ class User {
       };
     }
 
-    const checkLogin = await this.loginExists(login);
-    const checkEmail = await this.emailExists(email);
-
-    if (checkLogin !== false) {
-      return {
-        msg: 'Login em uso'
-      };
-    }
-
-    if (checkEmail !== false) {
-      return {
-        msg: 'E-mail em uso'
-      };
-    }
-
     return true;
   }
 

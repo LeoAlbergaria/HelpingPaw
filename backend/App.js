@@ -1,5 +1,4 @@
 const express = require('express');
-const homeRoutes = require('./src/routes/homeRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 
 class App {
