@@ -22,11 +22,26 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }, // Criar um tipo específico para telefone
+  posts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post',
+    require: false,
+  }],
 });
 
 const userModel = mongoose.model('User', userSchema);
 
 class User {
+
+  async addPost(userId, postId) {
+    const user = await userModel.findById(userId);
+
+    if (user === null) return false;
+
+
+
+    return user;
+  }
 
   async updateUserByLogin(login, senha, nome, email, telefone) {
     const user = await userModel.findOneAndUpdate({
@@ -70,7 +85,7 @@ class User {
 
   // Retorna falso se não existe usuário, retorna o usuário caso contrário
   async idExists(id) {
-    const user = await userModel.findById(id, '-senha');
+    const user = await userModel.findById(id);
     return user === null ? false : user;
   }
 
@@ -161,14 +176,18 @@ class User {
     return senhaHash;
   }
 
-  async dbStore(login, senha, nome, email, telefone) {
-    userModel.create({
+  async createUser(login, senha, nome, email, telefone) {
+    const usuario = await userModel.create({
       login,
       senha,
       nome,
       email,
       telefone,
     });
+
+    return {
+      _id: usuario._id
+    };
   }
 }
 

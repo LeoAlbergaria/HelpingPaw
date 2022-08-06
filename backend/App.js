@@ -1,4 +1,5 @@
 const express = require('express');
+const postRoutes = require('./src/routes/postRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 
 class App {
@@ -16,7 +17,7 @@ class App {
   }
 
   routes() {
-    this.app.use('/', userRoutes);
+    this.app.use('/', userRoutes, postRoutes);
   }
 }
 

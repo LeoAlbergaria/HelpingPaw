@@ -37,4 +37,9 @@ function checkToken(req, res, next) {
 
 }
 
+function generateToken(params = {}) {
+  return jwt.sign(params, process.env.SECRET);
+}
+
+exports.generateToken = generateToken;
 exports.checkToken = checkToken;

@@ -1,5 +1,8 @@
 const User = require('../models/UserModel');
-const jwt = require('jsonwebtoken');
+
+const {
+  generateToken
+} = require('../middlewares/tokenMiddlewares');
 
 class UserController {
   async createUser(req, res) {
@@ -22,15 +25,15 @@ class UserController {
       const checkEmail = await User.emailExists(email);
 
       if (checkLogin !== false) {
-        return {
+        return res.status(422).json({
           msg: 'Login em uso'
-        };
+        });
       }
 
       if (checkEmail !== false) {
-        return {
+        return res.status(422).json({
           msg: 'E-mail em uso'
-        };
+        });
       }
 
 
@@ -38,10 +41,17 @@ class UserController {
 
       const senhaHash = await User.encryptSenha(senha);
 
-      User.dbStore(login, senhaHash, nome, email, telefone)
-        .then(res.status(201).json({
-          msg: 'Usuário cadastrado com sucesso!'
-        }));
+      const usuario = await User.createUser(login, senhaHash, nome, email, telefone);
+
+      const token = generateToken({
+        id: usuario._id
+      });
+
+      res.status(201).json({
+        userId: usuario._id,
+        msg: 'Usuário cadastrado com sucesso!',
+        token
+      });
 
     } catch (erro) {
       console.log(erro);
@@ -82,15 +92,12 @@ class UserController {
         });
       }
 
-      const secret = process.env.SECRET;
-
-      const token = jwt.sign({
-          id: usuario._id,
-        },
-        secret
-      );
+      const token = generateToken({
+        id: usuario._id
+      });
 
       return res.status(200).json({
+        userId: usuario._id,
         msg: 'Autenticação realizada com sucesso',
         token
       })
@@ -144,6 +151,7 @@ class UserController {
       }
 
       return res.status(201).json({
+        userId: user._id,
         msg: 'Usuário atualizado com sucesso'
       });
 
