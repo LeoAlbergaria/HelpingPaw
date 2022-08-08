@@ -33,6 +33,25 @@ const userModel = mongoose.model('User', userSchema);
 
 class User {
   /**
+   * Retorna todos os usuários do sistema, menos
+   * o que está consultando.
+   * 
+   * @param {string} userId Id do usuário consultando
+   * @returns Outros usuários.
+   */
+  async getOtherUsers(userId) {
+    const users = userModel.find({
+      _id: {
+        $ne: userId
+      }
+    }).select({
+      senha: 0
+    }).populate();
+
+    return users;
+  }
+
+  /**
    * Deleta o registro de um post do
    * array de posts do usuario.
    * 

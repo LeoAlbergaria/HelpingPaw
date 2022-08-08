@@ -13,6 +13,7 @@ router.post('/register/user', userController.createUser);
 router.post('/auth/login', userController.authUser);
 
 // Rotas privadas
+router.get('/user/all', checkToken, userController.getOtherUsers);
 
 // O login do usuário deve ser enviado pela URL
 router.get('/user/:login', checkToken, userController.getUser);

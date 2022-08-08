@@ -7,8 +7,8 @@ class PostController {
    * Deleta um post do usuário, removendo
    * seu registro do array do usuário também.
    * 
-   * @param {*} req Requisição
-   * @param {*} res Response
+   * @param {Object} req Requisição
+   * @param {Object} res Response
    */
   async deletePost(req, res) {
     try {
@@ -39,8 +39,8 @@ class PostController {
    * Retorna resposta com todos os posts de um
    * usuário passado como parametro na rota.
    * 
-   * @param {*} req Requisição
-   * @param {*} res Response
+   * @param {Object} req Requisição
+   * @param {Object} res Response
    * @returns 
    */
   async getUserPosts(req, res) {
@@ -58,7 +58,7 @@ class PostController {
 
       const posts = (await user.populate({
         path: 'posts'
-      })).posts;
+      }));
 
       return res.status(202).json(posts);
 
@@ -74,8 +74,8 @@ class PostController {
    * Cria um post no banco de dados e retorna o mesmo
    * pro cliente.
    * 
-   * @param {*} req Requisição
-   * @param {*} res Response
+   * @param {Object} req Requisição
+   * @param {Object} res Response
    * @returns Apenas uma mensagem caso o post não tenha sido criado, caso contrário
    * retorna o post também.
    */

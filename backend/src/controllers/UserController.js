@@ -5,6 +5,37 @@ const {
 } = require('../middlewares/tokenMiddlewares');
 
 class UserController {
+  /**
+   * Controla a rota de requisitar
+   * todos os usuários além do próprio
+   * que fez a requisição.
+   * 
+   * @param {Object} req Requisição
+   * @param {Object} res Response
+   */
+  async getOtherUsers(req, res) {
+    try {
+      const {
+        userId
+      } = req.body;
+
+      if (!userId) {
+        return res.status(422).json({
+          msg: 'Insira o userId no body'
+        });
+      }
+
+      const users = await User.getOtherUsers(userId);
+      return res.status(202).json(users);
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.'
+      });
+    }
+
+  }
+
   async createUser(req, res) {
     try {
       const {
