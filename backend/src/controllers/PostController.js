@@ -56,7 +56,9 @@ class PostController {
         });
       }
 
-      const posts = user.posts;
+      const posts = (await user.populate({
+        path: 'posts'
+      })).posts;
 
       return res.status(202).json(posts);
 
