@@ -111,20 +111,27 @@ class UserController {
   }
 
   async getUser(req, res) {
-    // Enviado da URL
-    const login = req.params.login;
+    try {
+      // Enviado da URL
+      const login = req.params.login;
 
-    const user = await User.getUserByLogin(login);
+      const user = await User.getUserByLogin(login);
 
-    if (user === false) {
-      return res.status(404).json({
-        msg: 'Usuário não encontrado'
+      if (user === false) {
+        return res.status(404).json({
+          msg: 'Usuário não encontrado'
+        });
+      }
+
+      return res.status(202).json({
+        user
+      });
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.'
       });
     }
-
-    return res.status(202).json({
-      user
-    });
   }
 
   async updateUser(req, res) {

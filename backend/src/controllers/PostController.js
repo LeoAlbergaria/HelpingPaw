@@ -2,6 +2,81 @@ const Post = require('../models/PostModel');
 const User = require('../models/UserModel');
 
 class PostController {
+
+  /**
+   * Deleta um post do usuário, removendo
+   * seu registro do array do usuário também.
+   * 
+   * @param {*} req Requisição
+   * @param {*} res Response
+   */
+  async deletePost(req, res) {
+    try {
+      const postId = req.params.postId;
+
+      const post = await Post.deletePost(postId);
+
+      if (post === false) {
+        return res.status(404).json({
+          msg: 'Post não encontrado'
+        });
+      }
+
+      await User.removePostFromArray(postId, post.user._id);
+
+      return res.status(201).json({
+        msg: 'Post deletado com sucesso'
+      });
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um erro no servidor, tente novamente mais tarde.'
+      });
+    }
+  }
+
+  /**
+   * Retorna resposta com todos os posts de um
+   * usuário passado como parametro na rota.
+   * 
+   * @param {*} req Requisição
+   * @param {*} res Response
+   * @returns 
+   */
+  async getUserPosts(req, res) {
+    try {
+      // Enviado da URL
+      const login = req.params.login;
+
+      const user = await User.getUserByLogin(login);
+
+      if (user === false) {
+        return res.status(404).json({
+          msg: 'Usuário não encontrado'
+        });
+      }
+
+      const posts = user.posts;
+
+      return res.status(202).json(posts);
+
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um erro no servidor, tente novamente mais tarde.'
+      });
+    }
+  }
+
+  /**
+   * Cria um post no banco de dados e retorna o mesmo
+   * pro cliente.
+   * 
+   * @param {*} req Requisição
+   * @param {*} res Response
+   * @returns Apenas uma mensagem caso o post não tenha sido criado, caso contrário
+   * retorna o post também.
+   */
   async createPost(req, res) {
     try {
       const {

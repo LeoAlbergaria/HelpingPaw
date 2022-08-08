@@ -16,7 +16,7 @@ router.post('/auth/login', userController.authUser);
 
 // O login do usuário deve ser enviado pela URL
 router.get('/user/:login', checkToken, userController.getUser);
-router.post('/user/edit', checkToken, userController.updateUser);
+router.put('/user/edit', checkToken, userController.updateUser);
 
 
 module.exports = router;

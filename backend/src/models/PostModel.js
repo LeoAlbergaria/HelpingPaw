@@ -10,7 +10,7 @@ const postSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  usuario: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     require: true
@@ -20,6 +20,18 @@ const postSchema = new mongoose.Schema({
 const postModel = mongoose.model('Post', postSchema);
 
 class Post {
+  async deletePost(postId) {
+    const post = await postModel.findByIdAndDelete(postId);
+
+    // Post não existe ou já foi excluido
+    if (post === null) {
+      console.log(`Post ${postId} não encontrado`)
+      return false;
+    }
+
+    return post;
+  }
+
   validatePost(descricao, titulo) {
     if (typeof descricao !== 'string') {
       return {
@@ -41,10 +53,10 @@ class Post {
       return false;
     }
 
-    const post = await postModel.create({
+    let post = await postModel.create({
       descricao,
       titulo,
-      user: userId
+      user: userId,
     });
 
     if (post === null) {
@@ -52,9 +64,13 @@ class Post {
       return false;
     }
 
-    user.posts.push(post);
-    user.save();
+    await user.posts.push(post);
+    await user.save();
 
+    post = await post.populate({
+      path: 'user',
+      select: '-senha'
+    });
 
     return post;
   }

@@ -32,15 +32,23 @@ const userSchema = new mongoose.Schema({
 const userModel = mongoose.model('User', userSchema);
 
 class User {
-
-  async addPost(userId, postId) {
-    const user = await userModel.findById(userId);
-
-    if (user === null) return false;
-
-
-
-    return user;
+  /**
+   * Deleta o registro de um post do
+   * array de posts do usuario.
+   * 
+   * @param {string} postId 
+   * @param {string} userId 
+   */
+  async removePostFromArray(postId, userId) {
+    await userModel.updateOne({
+      _id: userId
+    }, {
+      $pullAll: {
+        posts: [{
+          _id: postId
+        }]
+      }
+    });
   }
 
   async updateUserByLogin(login, senha, nome, email, telefone) {

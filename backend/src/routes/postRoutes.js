@@ -10,4 +10,8 @@ const router = new Router();
 
 router.post('/user/newpost', checkToken, postController.createPost);
 
+router.get('/:login/posts', checkToken, postController.getUserPosts);
+
+router.delete('/user/:postId', checkToken, postController.deletePost);
+
 module.exports = router;
