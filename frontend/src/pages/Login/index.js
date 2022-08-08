@@ -1,14 +1,39 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import { FiLogIn } from 'react-icons/fi';
-import {Link, useHistory} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
-// import api from '../../services/api';
+import api from '../../services/api';
 
 import './styles.css';
 
 import logo from '../../assets/logo.png'
 
 export default function Login() {
+    const [login, setLogin] = useState('');
+    const [senha, setSenha] = useState('');
+
+    const navigate = useNavigate();
+
+    async function handleLogin(e) {
+        e.preventDefault();
+
+        const data = {
+            login,
+            senha,
+        };
+
+        try {
+            const response = await api.post('sessions', data);
+
+            // localStorage.setItem('ongId', id);
+            // localStorage.setItem('ongName', response.data.name);
+
+            navigate.push('/home');
+        } catch (err) {
+            alert('Falha no login, tente novamente.');
+        }
+    };
+
     return (
         <div className="login-container">
         
@@ -16,16 +41,16 @@ export default function Login() {
 
             <section className="form">
 
-                <form action="">
+                <form onSubmit={handleLogin}>
                     <h1>Faça seu login</h1>
 
-                    <input placeholder="username"
-                        /*value={id}
-    onChange={e => setId(e.target.value)}*/
+                    <input placeholder="Login"
+                        value={login}
+                        onChange={e => setLogin(e.target.value)}
                     />
-                    <input placeholder="password"
-                        /*value={id}
-    onChange={e => setId(e.target.value)}*/
+                    <input placeholder="Senha"
+                        value={senha}
+                        onChange={e => setSenha(e.target.value)}
                     />
                     <button className="button" type="submit">Entrar</button>
 
