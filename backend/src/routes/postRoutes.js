@@ -6,9 +6,24 @@ const {
     checkToken
 } = require('../middlewares/tokenMiddlewares');
 
+// const {
+//     handleImage
+// } = require('../middlewares/imageMiddlewares');
+
+
+// const multer = require('multer');
+// // Diretório para salvar temporariamente as imagens
+// const destTempDir = "temp"
+// // Caminho temporário completo
+// const destTempPath = `./${destTempDir}`
+// const upload = multer({
+//     dest: destTempPath
+// })
+
 const router = new Router();
 
 router.post('/user/newpost', checkToken, postController.createPost);
+// router.post('/user/newpost', checkToken, upload.single('image'), handleImage, postController.createPost);
 
 router.get('/:login/posts', checkToken, postController.getUserPosts);
 
