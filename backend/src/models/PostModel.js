@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const typeTags = ['ajuda', 'oferta'];
 
 // Tipos de animais aceitos
-const animalTags = ['cachorro', 'gato', 'passaro', 'roedor'];
+const animalTags = ['cachorro', 'gato', 'passaro', 'roedor', 'outro'];
 
 const postSchema = new mongoose.Schema({
   descricao: {

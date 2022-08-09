@@ -3,6 +3,13 @@ const User = require('../models/UserModel');
 
 class PostController {
 
+  /**
+   * Atualiza as informações de um post.
+   * 
+   * @param {Object} req 
+   * @param {Object} res 
+   * @returns 
+   */
   async updatePost(req, res) {
     try {
       const {
