@@ -7,16 +7,30 @@ const {
 
 class UserController {
 
+  /**
+   * Deleta um usuário do sistema e todos os seus posts.
+   * 
+   * @param {Object} req Requisição
+   * @param {Object} res Response
+   * @returns user deleted
+   */
   async deleteUser(req, res) {
-    const userId = req.params.userId;
+    try {
+      const userId = req.params.userId;
 
-    const user = await User.deleteUser(userId);
-    // Remove os posts
-    for (let post of user.posts) {
-      await Post.deletePost(post);
+      const user = await User.deleteUser(userId);
+      // Remove os posts
+      for (let post of user.posts) {
+        await Post.deletePost(post);
+      }
+
+      return res.status(200).json(user);
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.'
+      });
     }
-
-    return res.status(200).json(user);
   }
 
   /**
