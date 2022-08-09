@@ -40,6 +40,7 @@ class User {
    * @returns Outros usuários.
    */
   async getOtherUsers(userId) {
+    // Procurar na DB usuarios com id diferente de userId
     const users = userModel.find({
       _id: {
         $ne: userId

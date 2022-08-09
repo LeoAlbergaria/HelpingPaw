@@ -22,6 +22,8 @@ const {
 
 const router = new Router();
 
+router.get('/posts', checkToken, postController.getAllPosts);
+
 router.post('/user/newpost', checkToken, postController.createPost);
 // router.post('/user/newpost', checkToken, upload.single('image'), handleImage, postController.createPost);
 

@@ -4,6 +4,27 @@ const User = require('../models/UserModel');
 class PostController {
 
   /**
+   * Responde com todos os posts, com as informacoes do usuario de cada post
+   * menos sua senha.
+   * 
+   * @param {Object} req Requisição
+   * @param {Object} res Response
+   */
+  async getAllPosts(req, res) {
+    try {
+      const posts = await Post.getAllPosts();
+
+      return res.status(200).json(posts);
+
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um erro no servidor, tente novamente mais tarde.'
+      });
+    }
+  }
+
+  /**
    * Deleta um post do usuário, removendo
    * seu registro do array do usuário também.
    * 

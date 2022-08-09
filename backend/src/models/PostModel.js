@@ -35,6 +35,22 @@ const postSchema = new mongoose.Schema({
 const postModel = mongoose.model('Post', postSchema);
 
 class Post {
+
+  /**
+   * Busca todos os posts cadastrados.
+   * 
+   * @returns Todos os posts cadastrados no sistema, com as informações do usuário,
+   * menos sua senha.
+   */
+  async getAllPosts() {
+    const posts = await postModel.find().populate({
+      path: 'user',
+      select: '-senha'
+    });
+
+    return posts;
+  }
+
   /**
    * Deleta um post do banco de dados.
    * 
