@@ -29,11 +29,11 @@ export default function Register(){
         };
 
         try {
-            const response = await api.post('ongs', data);
+            const response = await api.post('/register/user', data);
     
             // alert(`Seu ID de acesso: ${response.data.id}`);
 
-            navigate.push('/');
+            navigate("../", { replace: true });
         } catch (err) {
             alert('Erro no cadastro, tente novamente.');
         }
