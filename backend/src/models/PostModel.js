@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const User = require('../models/UserModel');
 
+// Tipos de posts aceitos
 const typeTags = ['ajuda', 'oferta'];
+
+// Tipos de animais aceitos
 const animalTags = ['cachorro', 'gato', 'passaro', 'roedor'];
 
 const postSchema = new mongoose.Schema({
@@ -35,6 +38,64 @@ const postSchema = new mongoose.Schema({
 const postModel = mongoose.model('Post', postSchema);
 
 class Post {
+
+  /**
+   * Atualiza um post, identificado por postId.
+   * 
+   * @param {string} postId Id do post a ser atualizado
+   * @param {string} descricao descricao do post
+   * @param {string} titulo titulo do post
+   * @param {string} typeTag tipo do post, deve ser um tipo contido em typeTags
+   * @param {string} animalTag tipo de animal do post, deve ser um tipo contido em animalTags
+   * @returns false caso tenha ocorrido algm problema com o armazenamento, post se tudo ocorreu bem.
+   */
+  async updatePost(postId, descricao, titulo, typeTag, animalTag) {
+    if (typeof postId !== 'string') {
+      console.log('postId deve ser uma string');
+      return false;
+    }
+    if (typeof descricao !== 'string') {
+      console.log('descricao deve ser uma string');
+      return false;
+    }
+    if (typeof titulo !== 'string') {
+      console.log('titulo deve ser uma string');
+      return false;
+    }
+    if (typeof typeTag !== 'string') {
+      console.log('typeTag deve ser uma string');
+      return false;
+    }
+    if (!typeTags.includes(typeTag)) {
+      console.log('typeTag deve ser um dos tipos do array typeTags.');
+      return false;
+    }
+    if (typeof animalTag !== 'string') {
+      console.log('animalTag deve ser uma string');
+      return false;
+    }
+    if (!animalTags.includes(animalTag)) {
+      console.log('animalTag deve ser um dos tipos do array animalTags.');
+      return false;
+    }
+
+    descricao = descricao.trim();
+    titulo = titulo.trim();
+
+    const post = await (await postModel.findByIdAndUpdate(postId, {
+      descricao,
+      titulo,
+      typeTag,
+      animalTag
+    }, {
+      new: true
+    })).populate({
+      path: 'user',
+      select: '-senha'
+    });
+
+    return post;
+  }
 
   /**
    * Busca todos os posts contendo a tag animalTag.
@@ -191,6 +252,35 @@ class Post {
    * @returns false se algo deu errado, post criado senão
    */
   async createPost(userId, descricao, titulo, typeTag, animalTag) {
+    if (typeof userId !== 'string') {
+      console.log('userId deve ser uma string');
+      return false;
+    }
+    if (typeof descricao !== 'string') {
+      console.log('descricao deve ser uma string');
+      return false;
+    }
+    if (typeof titulo !== 'string') {
+      console.log('titulo deve ser uma string');
+      return false;
+    }
+    if (typeof typeTag !== 'string') {
+      console.log('typeTag deve ser uma string');
+      return false;
+    }
+    if (!typeTags.includes(typeTag)) {
+      console.log('typeTag deve ser um dos tipos do array typeTags.');
+      return false;
+    }
+    if (typeof animalTag !== 'string') {
+      console.log('animalTag deve ser uma string');
+      return false;
+    }
+    if (!animalTags.includes(animalTag)) {
+      console.log('animalTag deve ser um dos tipos do array animalTags.');
+      return false;
+    }
+
     const user = await User.idExists(userId);
     if (user === false) {
       console.log('Usuario nao encontrado');
@@ -199,32 +289,21 @@ class Post {
     descricao = descricao.trim();
     titulo = titulo.trim();
 
-    let post = null;
-    try {
-      post = await postModel.create({
-        descricao,
-        titulo,
-        user: userId,
-        typeTag,
-        animalTag
-      });
-    } catch (erro) {
-      console.log('Tag invalida.');
-      return false;
-    }
-
-    if (post === null) {
-      console.log('Falha ao armazenar o post.');
-      return false;
-    }
-
-    await user.posts.push(post);
-    await user.save();
-
-    post = await post.populate({
+    const post = await (await postModel.create({
+      descricao,
+      titulo,
+      user: userId,
+      typeTag,
+      animalTag
+    })).populate({
       path: 'user',
       select: '-senha'
     });
+
+    user.posts.push(post);
+    await user.save();
+
+
 
     return post;
   }

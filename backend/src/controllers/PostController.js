@@ -3,6 +3,61 @@ const User = require('../models/UserModel');
 
 class PostController {
 
+  async updatePost(req, res) {
+    try {
+      const {
+        postId,
+        titulo,
+        descricao,
+        typeTag,
+        animalTag
+      } = req.body;
+
+      if (!postId) {
+        return res.status(422).json({
+          msg: 'Insira postId no body'
+        });
+      }
+      if (!titulo) {
+        return res.status(422).json({
+          msg: 'Insira titulo no body'
+        });
+      }
+      if (!descricao) {
+        return res.status(422).json({
+          msg: 'Insira descricao no body'
+        });
+      }
+      if (!animalTag) {
+        return res.status(422).json({
+          msg: 'Insira animalTag no body'
+        });
+      }
+      if (!typeTag) {
+        return res.status(422).json({
+          msg: 'Insira typeTag no body'
+        });
+      }
+
+      const post = await Post.updatePost(postId, descricao, titulo, typeTag, animalTag);
+
+      if (post === false) {
+        return res.status(422).json({
+          msg: 'Não foi possível atualizar o post.'
+        });
+      }
+
+      return res.status(202).json(post);
+
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um erro no servidor, tente novamente mais tarde.'
+      });
+    }
+
+  }
+
   /**
    * Responde com todos os posts, com as informacoes do usuario de cada post
    * menos sua senha.
@@ -29,7 +84,9 @@ class PostController {
       }
 
       if (posts === false) {
-        throw ('Preencha os parâmetros corretamente');
+        return res.status(422).json({
+          msg: 'Preencha os parâmetros corretamente'
+        });
       }
 
       return res.status(200).json(posts);
