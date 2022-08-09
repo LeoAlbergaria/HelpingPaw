@@ -84,7 +84,9 @@ class PostController {
       const {
         userId,
         descricao,
-        titulo
+        titulo,
+        typeTag,
+        animalTag
       } = req.body;
 
       if (!userId) {
@@ -102,13 +104,23 @@ class PostController {
           msg: 'Insira a descricao no body'
         });
       }
+      if (!typeTag) {
+        return res.status(422).json({
+          msg: 'Insira a typeTag no body'
+        });
+      }
+      if (!animalTag) {
+        return res.status(422).json({
+          msg: 'Insira a animalTag no body'
+        });
+      }
 
       const valid = Post.validatePost(descricao, titulo);
       if (valid !== true) {
         return res.status(422).json(valid);
       }
 
-      const post = await Post.createPost(userId, descricao, titulo);
+      const post = await Post.createPost(userId, descricao, titulo, typeTag, animalTag);
 
       if (post === false) {
         return res.status(422).json({
@@ -123,6 +135,7 @@ class PostController {
 
     } catch (erro) {
       console.log(erro);
+      console.log(typeof erro)
       return res.status(500).json({
         msg: 'Ocorreu um erro no servidor, tente novamente mais tarde.'
       });
