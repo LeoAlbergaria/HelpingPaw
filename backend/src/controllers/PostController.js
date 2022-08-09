@@ -3,6 +3,13 @@ const User = require('../models/UserModel');
 
 class PostController {
 
+  /**
+   * Responde com o post com id correspondente.
+   * 
+   * @param {Object} req 
+   * @param {Object} res 
+   * @returns post, ou mensagem de erro.
+   */
   async getPost(req, res) {
     try {
       const postId = req.params.postId;

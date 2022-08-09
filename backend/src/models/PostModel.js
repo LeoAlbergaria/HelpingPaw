@@ -38,6 +38,12 @@ const postModel = mongoose.model('Post', postSchema);
 
 class Post {
 
+  /**
+   * Busca um post com o id informado.
+   * 
+   * @param {ObjectId} postId 
+   * @returns post correspondente, null caso não haja.
+   */
   async getPost(postId) {
     const post = await postModel.findById(postId).populate({
       path: 'user',
