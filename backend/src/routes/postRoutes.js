@@ -22,11 +22,15 @@ const {
 
 const router = new Router();
 
+router.put('/user/updatePost', checkToken, postController.updatePost);
+
+router.get('/posts', checkToken, postController.getAllPosts);
+
 router.post('/user/newpost', checkToken, postController.createPost);
 // router.post('/user/newpost', checkToken, upload.single('image'), handleImage, postController.createPost);
 
 router.get('/:login/posts', checkToken, postController.getUserPosts);
 
-router.delete('/user/:postId', checkToken, postController.deletePost);
+router.delete('/post/:postId', checkToken, postController.deletePost);
 
 module.exports = router;

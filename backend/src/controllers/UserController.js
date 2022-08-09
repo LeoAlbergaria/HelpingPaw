@@ -1,10 +1,38 @@
 const User = require('../models/UserModel');
+const Post = require('../models/PostModel');
 
 const {
   generateToken
 } = require('../middlewares/tokenMiddlewares');
 
 class UserController {
+
+  /**
+   * Deleta um usuário do sistema e todos os seus posts.
+   * 
+   * @param {Object} req Requisição
+   * @param {Object} res Response
+   * @returns user deleted
+   */
+  async deleteUser(req, res) {
+    try {
+      const userId = req.params.userId;
+
+      const user = await User.deleteUser(userId);
+      // Remove os posts
+      for (let post of user.posts) {
+        await Post.deletePost(post);
+      }
+
+      return res.status(200).json(user);
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.'
+      });
+    }
+  }
+
   /**
    * Controla a rota de requisitar
    * todos os usuários além do próprio
