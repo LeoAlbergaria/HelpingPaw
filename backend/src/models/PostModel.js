@@ -38,6 +38,15 @@ const postModel = mongoose.model('Post', postSchema);
 
 class Post {
 
+  async getPost(postId) {
+    const post = await postModel.findById(postId).populate({
+      path: 'user',
+      select: '-senha'
+    });
+
+    return post;
+  }
+
   /**
    * Atualiza um post, identificado por postId.
    * 

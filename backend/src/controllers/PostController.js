@@ -3,6 +3,29 @@ const User = require('../models/UserModel');
 
 class PostController {
 
+  async getPost(req, res) {
+    try {
+      const postId = req.params.postId;
+
+      const post = await Post.getPost(postId);
+
+      if (post === null) {
+        return res.status(404).json({
+          msg: 'Post não encontrado'
+        });
+      }
+
+      return res.status(200).json(post);
+
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um erro no servidor, tente novamente mais tarde.'
+      });
+    }
+
+  }
+
   /**
    * Atualiza as informações de um post.
    * 

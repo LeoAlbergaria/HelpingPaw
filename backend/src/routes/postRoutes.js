@@ -22,6 +22,8 @@ const {
 
 const router = new Router();
 
+router.get('/post/:postId', checkToken, postController.getPost);
+
 router.put('/user/updatePost', checkToken, postController.updatePost);
 
 router.get('/posts', checkToken, postController.getAllPosts);
