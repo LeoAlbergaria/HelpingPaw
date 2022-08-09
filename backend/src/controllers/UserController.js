@@ -1,10 +1,24 @@
 const User = require('../models/UserModel');
+const Post = require('../models/PostModel');
 
 const {
   generateToken
 } = require('../middlewares/tokenMiddlewares');
 
 class UserController {
+
+  async deleteUser(req, res) {
+    const userId = req.params.userId;
+
+    const user = await User.deleteUser(userId);
+    // Remove os posts
+    for (let post of user.posts) {
+      await Post.deletePost(post);
+    }
+
+    return res.status(200).json(user);
+  }
+
   /**
    * Controla a rota de requisitar
    * todos os usuários além do próprio

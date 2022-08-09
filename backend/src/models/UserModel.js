@@ -33,6 +33,24 @@ const userModel = mongoose.model('User', userSchema);
 
 class User {
   /**
+   * Deleta um usuário sem deletar seus posts do sistema.
+   * 
+   * @param {string} userId Id do usuario
+   * @returns false se o usuario nao foi encontrado e o proprio usuario caso tenha sido excluido.
+   */
+  async deleteUser(userId) {
+    const user = userModel.findByIdAndDelete(userId);
+
+
+    if (user === null) {
+      console.log(`Usuario ${userId} nao encontrado.`);
+      return false;
+    }
+
+    return user;
+  }
+
+  /**
    * Retorna todos os usuários do sistema, menos
    * o que está consultando.
    * 

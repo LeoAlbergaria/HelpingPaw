@@ -216,6 +216,12 @@ class PostController {
         return res.status(422).json(valid);
       }
 
+      const user = await User.idExists(userId);
+      if (user === false) {
+        console.log('Usuario nao encontrado');
+        return false;
+      }
+
       const post = await Post.createPost(userId, descricao, titulo, typeTag, animalTag);
 
       if (post === false) {
@@ -223,6 +229,10 @@ class PostController {
           msg: 'Nao foi possivel criar o post.'
         });
       }
+
+      // Associa post ao usuario
+      user.posts.push(post);
+      await user.save();
 
       return res.status(201).json({
         post,

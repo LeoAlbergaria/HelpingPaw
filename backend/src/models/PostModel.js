@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('../models/UserModel');
 
 // Tipos de posts aceitos
 const typeTags = ['ajuda', 'oferta'];
@@ -205,7 +204,7 @@ class Post {
    * Deleta um post do banco de dados.
    * 
    * @param {string} postId Id do post a ser deletado
-   * @returns false se o post não existe e o post excluido se existia.
+   * @returns false se o post não existe e o próprio post excluido se existia.
    */
   async deletePost(postId) {
     const post = await postModel.findByIdAndDelete(postId);
@@ -244,6 +243,7 @@ class Post {
   /**
    * Cria um post no banco de dados.
    * 
+   * @pre userId deve ser de um usuário existente.
    * @param {string} userId Id do usuario
    * @param {string} descricao descricao do post
    * @param {string} titulo titulo do post
@@ -281,11 +281,6 @@ class Post {
       return false;
     }
 
-    const user = await User.idExists(userId);
-    if (user === false) {
-      console.log('Usuario nao encontrado');
-      return false;
-    }
     descricao = descricao.trim();
     titulo = titulo.trim();
 
@@ -299,11 +294,6 @@ class Post {
       path: 'user',
       select: '-senha'
     });
-
-    user.posts.push(post);
-    await user.save();
-
-
 
     return post;
   }
