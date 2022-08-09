@@ -39,7 +39,9 @@ class User {
    * @returns false se o usuario nao foi encontrado e o proprio usuario caso tenha sido excluido.
    */
   async deleteUser(userId) {
-    const user = userModel.findByIdAndDelete(userId);
+    const user = userModel.findByIdAndDelete(userId).select({
+      senha: 0
+    });
 
 
     if (user === null) {
