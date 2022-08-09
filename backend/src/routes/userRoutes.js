@@ -8,6 +8,8 @@ const {
 
 const router = new Router();
 
+router.delete('/user/:userId', checkToken, userController.deleteUser);
+
 // Rotas Publicas
 router.post('/register/user', userController.createUser);
 router.post('/auth/login', userController.authUser);
