@@ -157,6 +157,7 @@ class UserController {
 
       return res.status(200).json({
         userId: usuario._id,
+        login,
         msg: 'Autenticação realizada com sucesso',
         token
       })
