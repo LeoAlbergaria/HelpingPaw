@@ -10,8 +10,8 @@
     align-items: center;
 }
 
-.profile-container header span {
-    font-size: 20px;
+.profile-container header strong {
+    font-size: 30px;
     margin-left: 24px;
 }
 
@@ -19,33 +19,31 @@
     height: 64px;
 }
 
-.profile-container header .profile-icon{
-    width: 64px;
-    margin-left: 16px;
-}
-
-.profile-container header a {
-    width: 260px;
-    margin-left: auto;
+.profile-container header .back-arrow {
+    width: 36px;
     margin-top: 0;
 }
 
-.profile-container header button {
-    height: 60px;
-    width: 60px;
-    border-radius: 8px;
-    border: 1px solid #E02041;
-    opacity: 0.5;
-    background: transparent;
-    margin-left: 16px;
-    transition: border-color 0.2s;
+.profile-container .dados-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 24px;
 }
 
-.profile-container header button:hover {
-    /* border-color: #E02041; */
-    opacity: 1;
-    /* filter: brightness(50%); */
+.profile-container .dados-container form {
+    width: 100%;
+    margin-left: 64px;
 }
+
+
+.profile-container .dados-container form .input-group {
+    display: flex; 
+ }
+ 
+ .profile-container .dados-container form .input-group input + input {
+     margin-left: 8px;
+ }
 
 .profile-container h1 {
     margin-top: 80px;
@@ -64,6 +62,18 @@
     padding: 24px;
     border-radius: 8px;
     position: relative;
+}
+
+.profile-container ul li button{
+    position: absolute;
+    right: 24px;
+    top: 24px;
+    border: 0;
+    background: #FFF;
+}
+
+.profile-container ul li button:hover {
+    opacity: 0.8;
 }
 
 .profile-container ul li strong {
