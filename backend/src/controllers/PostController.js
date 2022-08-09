@@ -12,7 +12,25 @@ class PostController {
    */
   async getAllPosts(req, res) {
     try {
-      const posts = await Post.getAllPosts();
+      let posts = null;
+      const {
+        typeTag,
+        animalTag
+      } = req.body;
+
+      if (!typeTag && !animalTag) {
+        posts = await Post.getAllPosts();
+      } else if (!typeTag) {
+        posts = await Post.getPostsByAnimalTag(animalTag);
+      } else if (!animalTag) {
+        posts = await Post.getPostsByTypeTag(typeTag);
+      } else {
+        posts = await Post.getPostsByBothTags(typeTag, animalTag);
+      }
+
+      if (posts === false) {
+        throw ('Preencha os parâmetros corretamente');
+      }
 
       return res.status(200).json(posts);
 

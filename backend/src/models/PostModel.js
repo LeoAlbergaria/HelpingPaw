@@ -37,6 +37,95 @@ const postModel = mongoose.model('Post', postSchema);
 class Post {
 
   /**
+   * Busca todos os posts contendo a tag animalTag.
+   * 
+   * @param {string} animalTag tag do tipo do animal, deve respeitar um dos tipos em animalTags.
+   * @returns false se houve um problema nos parametros, posts senão.
+   */
+  async getPostsByAnimalTag(animalTag) {
+    if (typeof animalTag !== 'string') {
+      console.log('animalTag deve ser uma string');
+      return false;
+    }
+    if (!animalTags.includes(animalTag)) {
+      console.log('animalTag deve ser um dos tipos do array animalTags.');
+      return false;
+    }
+
+    const posts = await postModel.find({
+      animalTag
+    }).populate({
+      path: 'user',
+      select: '-senha'
+    });
+
+    return posts;
+  }
+
+  /**
+   * Busca todos os posts correspondentes à tag de tipo.
+   * 
+   * @param {string} typeTag tipo do post, deve respeitar os tipos aceitos
+   * @returns false se houve um problema nos parametros, posts senão.
+   */
+  async getPostsByTypeTag(typeTag) {
+    if (typeof typeTag !== 'string') {
+      console.log('typeTag deve ser uma string');
+      return false;
+    }
+    if (!typeTags.includes(typeTag)) {
+      console.log('typeTag deve ser um dos tipos do array typeTags.');
+      return false;
+    }
+
+    const posts = await postModel.find({
+      typeTag
+    }).populate({
+      path: 'user',
+      select: '-senha'
+    });
+
+    return posts;
+  }
+
+  /**
+   * Busca todos os posts correspondentes à ambas as tags,
+   * typeTag e animalTag.
+   * 
+   * @param {string} typeTag tipo do post, deve respeitar os tipos aceitos
+   * @param {string} animalTag tipo do animal, deve respeitar os tipos aceitos
+   * @returns false se houve um problema nos parametros, posts senão.
+   */
+  async getPostsByBothTags(typeTag, animalTag) {
+    if (typeof typeTag !== 'string') {
+      console.log('typeTag deve ser uma string');
+      return false;
+    }
+    if (typeof animalTag !== 'string') {
+      console.log('animalTag deve ser uma string');
+      return false;
+    }
+    if (!typeTags.includes(typeTag)) {
+      console.log('typeTag deve ser um dos tipos do array typeTags.');
+      return false;
+    }
+    if (!animalTags.includes(animalTag)) {
+      console.log('animalTag deve ser um dos tipos do array animalTags.');
+      return false;
+    }
+
+    const posts = await postModel.find({
+      typeTag,
+      animalTag
+    }).populate({
+      path: 'user',
+      select: '-senha'
+    });
+
+    return posts;
+  }
+
+  /**
    * Busca todos os posts cadastrados.
    * 
    * @returns Todos os posts cadastrados no sistema, com as informações do usuário,
