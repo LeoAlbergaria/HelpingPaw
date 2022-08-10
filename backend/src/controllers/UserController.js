@@ -136,6 +136,7 @@ class UserController {
       confirmSenha = confirmSenha.trim();
       email = email.trim();
       telefone = telefone.trim();
+      telefone = telefone.replace(/\D/g, '');
 
       const checkLogin = await User.loginExists(login);
       const checkEmail = await User.emailExists(email);
@@ -273,6 +274,8 @@ class UserController {
       confirmSenha = confirmSenha.trim();
       email = email.trim();
       telefone = telefone.trim();
+
+      telefone = telefone.replace(/\D/g, '');
 
       const senhaHash = await User.encryptSenha(senha);
 
