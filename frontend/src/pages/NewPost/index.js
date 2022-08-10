@@ -9,6 +9,8 @@ import './styles.css';
 export default function Profile(){
     const [titulo, setTitle] = useState('');
     const [descricao, setDescription] = useState('');
+    const [animalTag, setAnimal] = useState('gato');
+    const [typeTag, setType] = useState('oferta');
 
     const navigate = useNavigate();
 
@@ -22,7 +24,11 @@ export default function Profile(){
             userId,
             titulo,
             descricao,
+            typeTag,
+            animalTag,
         };
+
+        console.log(data); 
 
         try {
             await api.post('/user/newpost', data, {
@@ -61,6 +67,26 @@ export default function Profile(){
                         value={descricao}
                         onChange={e => setDescription(e.target.value)}
                      />
+                    <div className="tag-group">
+
+                        <select name="types" id="types"
+                        value={typeTag}
+                        onChange={e => setType(e.target.value)}>
+                            <option value="ajuda">ajuda</option>
+                            <option value="oferta">oferta</option>
+                        </select>
+
+                        <select name="animais" id="animais"
+                        value={animalTag}
+                        onChange={e => setAnimal(e.target.value)}>
+                            <option value="gato">gato</option>
+                            <option value="cachorro">cachorro</option>
+                            <option value="passaro">passaro</option>
+                            <option value="roedor">roedor</option>
+                            <option value="outro">outro</option>
+                        </select>
+
+                    </div>
 
                     <button className="button" type="submit">Cadastrar</button>
                 </form>

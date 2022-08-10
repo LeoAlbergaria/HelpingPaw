@@ -1,6 +1,7 @@
 import { useEffect , useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import { FiPower, FiUser } from 'react-icons/fi';
+import Tags from '../../components/Tags/index.js';
 
 import api from '../../services/api';
 
@@ -15,7 +16,6 @@ export default function Home(){
     const navigate = useNavigate();
 
     const token = localStorage.getItem('token');
-    // const ongName = localStorage.getItem('ongName');
     
     useEffect(() => {
         api.get('/posts', {
@@ -27,20 +27,6 @@ export default function Home(){
             // setUser(response.data);
         })
     }, [token]);
-
-    // async function handleDeleteIncidente(id) {
-    //     try {
-    //         await api.delete(`incidents/${id}`, {
-    //             headers: {
-    //                 Authorization: ongId,
-    //             }
-    //         });
-
-    //         setIncidents(incidents.filter(incident => incident.id !== id));
-    //     } catch (err) {
-    //         alert('Erro ao deletar caso, tente novamente');
-    //     }
-    // }
 
     function handleLogout () {
         localStorage.clear();
@@ -64,12 +50,18 @@ export default function Home(){
 
             <ul>
                {posts.map(post => (
-                   <li key={post.id}>
-                   <strong>TITULO:</strong>
-                   <p>{post.titulo}</p>
+                    <li key={post.id}>
+                    <strong>TITULO:</strong>
+                    <p>{post.titulo}</p>
 
-                   <strong>DESCRIÇÂO:</strong>
-                   <p>{post.descricao}</p>
+                    <strong>DESCRIÇÂO:</strong>
+                    <p>{post.descricao}</p>
+
+                    <div className="tags">
+                        {/* <p id='type-tag'>{post.typeTag}</p>
+                        <p id='animal-tag'>{post.animalTag}</p> */}
+                        <Tags animalTag={post.animalTag} typeTag={post.typeTag}/>
+                    </div>
                </li>
                ))} 
             </ul>
