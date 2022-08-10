@@ -38,6 +38,10 @@ const postModel = mongoose.model('Post', postSchema);
 
 class Post {
 
+  async findPostUserId(postId) {
+    return (await postModel.findById(postId)).user._id.toString();
+  }
+
   /**
    * Busca um post com o id informado.
    * 

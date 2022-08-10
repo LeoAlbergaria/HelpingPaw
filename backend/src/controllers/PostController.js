@@ -76,6 +76,13 @@ class PostController {
         });
       }
 
+      const userId = await Post.findPostUserId(postId);
+      if (userId !== req.tokenId) {
+        return res.status(401).json({
+          msg: 'Não autorizado'
+        });
+      }
+
       titulo = titulo.trim();
       descricao = descricao.trim();
 
@@ -149,6 +156,14 @@ class PostController {
   async deletePost(req, res) {
     try {
       const postId = req.params.postId;
+
+      const userId = await Post.findPostUserId(postId);
+      if (userId !== req.tokenId) {
+        return res.status(401).json({
+          msg: 'Não autorizado'
+        });
+      }
+
 
       const post = await Post.deletePost(postId);
 
