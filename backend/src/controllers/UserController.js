@@ -136,7 +136,14 @@ class UserController {
       confirmSenha = confirmSenha.trim();
       email = email.trim();
       telefone = telefone.trim();
+
       telefone = telefone.replace(/\D/g, '');
+
+      let ddd = telefone.substr(0, 2);
+      let numero = telefone.substr(2, 9);
+
+      ddd = '(' + ddd + ') '
+      telefone = ddd + numero;
 
       const checkLogin = await User.loginExists(login);
       const checkEmail = await User.emailExists(email);
@@ -276,6 +283,12 @@ class UserController {
       telefone = telefone.trim();
 
       telefone = telefone.replace(/\D/g, '');
+
+      let ddd = telefone.substr(0, 2);
+      let numero = telefone.substr(2, 9);
+
+      ddd = '(' + ddd + ') '
+      telefone = ddd + numero;
 
       const senhaHash = await User.encryptSenha(senha);
 
