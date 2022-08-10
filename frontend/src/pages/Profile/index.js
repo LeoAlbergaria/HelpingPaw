@@ -21,9 +21,10 @@ export default function Home(){
     const [user, setUser] = useState('');
 
     const token = localStorage.getItem('token');
+    const userLogin = localStorage.getItem('login');
 
     useEffect(() => {
-        api.get('/user/leo', {
+        api.get(`/user/${userLogin}`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             }
@@ -31,14 +32,14 @@ export default function Home(){
             setUser(response.data.user);
         })
 
-        api.get('/leo/posts', {
+        api.get(`/${userLogin}/posts`, {
             headers: {
                 "Authorization": `Bearer ${token}`,
             }
         }).then(response => {
             setPosts(response.data.posts);
         })
-    }, [token]);
+    }, [token, userLogin]);
 
     async function handleUpdate(e){
         e.preventDefault();

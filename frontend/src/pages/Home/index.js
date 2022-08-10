@@ -16,15 +16,23 @@ export default function Home(){
     const navigate = useNavigate();
 
     const token = localStorage.getItem('token');
+    const userLogin = localStorage.getItem('login');
     
     useEffect(() => {
+        api.get(`/user/${userLogin}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        }).then(response => {
+            setUser(response.data.user);
+        })
+
         api.get('/posts', {
             headers: {
                 "Authorization": `Bearer ${token}`,
             }
         }).then(response => {
             setPosts(response.data);
-            // setUser(response.data);
         })
     }, [token]);
 
@@ -37,7 +45,7 @@ export default function Home(){
         <div className="profile-container">
             <header>
                 <img src={logo} alt="HelpingPaw" />
-                <span>Bem vinda, </span>
+                <span>Bem vinda, {user.nome}</span>
                 <Link className="profile-icon" to="/profile"><FiUser size={36} color="#ff9d5c" /></Link>
 
                 <Link className="button" to="/home/new">Cadastrar novo caso</Link>
@@ -51,18 +59,16 @@ export default function Home(){
             <ul>
                {posts.map(post => (
                     <li key={post.id}>
-                    <strong>TITULO:</strong>
-                    <p>{post.titulo}</p>
+                        <strong>TITULO:</strong>
+                        <p>{post.titulo}</p>
 
-                    <strong>DESCRIÇÂO:</strong>
-                    <p>{post.descricao}</p>
+                        <strong>DESCRIÇÂO:</strong>
+                        <p>{post.descricao}</p>
 
-                    <div className="tags">
-                        {/* <p id='type-tag'>{post.typeTag}</p>
-                        <p id='animal-tag'>{post.animalTag}</p> */}
-                        <Tags animalTag={post.animalTag} typeTag={post.typeTag}/>
-                    </div>
-               </li>
+                        <div className="tags">
+                            <Tags animalTag={post.animalTag} typeTag={post.typeTag}/>
+                        </div>
+                    </li>
                ))} 
             </ul>
         </div>
