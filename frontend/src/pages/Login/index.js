@@ -23,12 +23,13 @@ export default function Login() {
         };
 
         try {
-            const response = await api.post('sessions', data);
+            const response = await api.post('/auth/login', data);
 
             // localStorage.setItem('ongId', id);
-            // localStorage.setItem('ongName', response.data.name);
+            localStorage.setItem('userId', response.data.userId);
+            localStorage.setItem('token', response.data.token);
 
-            navigate.push('/home');
+            navigate("../home", { replace: true });
         } catch (err) {
             alert('Falha no login, tente novamente.');
         }
