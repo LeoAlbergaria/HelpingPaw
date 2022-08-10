@@ -24,7 +24,9 @@ function checkToken(req, res, next) {
     console.log('Verificando token...');
 
     // Caso não passe na verificação, vai pro catch
-    jwt.verify(token, secret);
+    const data = jwt.verify(token, secret);
+
+    req.tokenId = data.id;
 
     next();
 

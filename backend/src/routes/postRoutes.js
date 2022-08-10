@@ -2,6 +2,7 @@ const {
     Router
 } = require('express');
 const postController = require('../controllers/PostController');
+const userController = require('../controllers/UserController');
 const {
     checkToken
 } = require('../middlewares/tokenMiddlewares');
@@ -24,15 +25,15 @@ const router = new Router();
 
 router.get('/post/:postId', checkToken, postController.getPost);
 
-router.put('/user/updatePost', checkToken, postController.updatePost);
+router.put('/user/updatePost', checkToken, userController.matchUserToken, postController.updatePost);
 
 router.get('/posts', checkToken, postController.getAllPosts);
 
-router.post('/user/newpost', checkToken, postController.createPost);
+router.post('/user/newpost', checkToken, userController.matchUserToken, postController.createPost);
 // router.post('/user/newpost', checkToken, upload.single('image'), handleImage, postController.createPost);
 
 router.get('/:login/posts', checkToken, postController.getUserPosts);
 
-router.delete('/post/:postId', checkToken, postController.deletePost);
+router.delete('/post/:postId', checkToken, userController.matchUserToken, postController.deletePost);
 
 module.exports = router;

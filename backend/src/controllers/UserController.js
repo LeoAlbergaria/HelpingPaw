@@ -7,6 +7,40 @@ const {
 
 class UserController {
 
+  async matchUserToken(req, res, next) {
+    try {
+      let userId = null;
+      if (!req.tokenId) {
+        throw ('É necessário o id do usuario que criou o token');
+      }
+
+      if (req.body.userId) {
+        userId = req.body.userId;
+      } else if (req.body.login) {
+        if (typeof req.body.login !== 'string') {
+          throw ('login precisa ser uma string');
+        }
+        userId = (await User.getUserByLogin(req.body.login))._id;
+      } else {
+        throw ('Inclua userId ou o login do usuario no body');
+      }
+
+      if (userId === req.tokenId) {
+        next()
+      } else {
+        return res.status(400).json({
+          msg: 'Não autorizado!'
+        });
+      }
+
+    } catch (erro) {
+      console.log(erro);
+      return res.status(500).json({
+        msg: 'Ocorreu um problema com o servidor. Tente novamente mais tarde.'
+      });
+    }
+  }
+
   /**
    * Deleta um usuário do sistema e todos os seus posts.
    * 
