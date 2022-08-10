@@ -7,6 +7,15 @@ const {
 
 class UserController {
 
+  /**
+   * Verifica se o id do usuario que criou o token
+   * é o mesmo do usuario enviando a requisicao.
+   * 
+   * @param {Object} req 
+   * @param {Object} res 
+   * @param {function} next 
+   * @returns 
+   */
   async matchUserToken(req, res, next) {
     try {
       let userId = null;
@@ -20,7 +29,7 @@ class UserController {
         if (typeof req.body.login !== 'string') {
           throw ('login precisa ser uma string');
         }
-        userId = (await User.getUserByLogin(req.body.login))._id;
+        userId = (await User.getUserByLogin(req.body.login))._id.toString();
       } else {
         throw ('Inclua userId ou o login do usuario no body');
       }
@@ -244,7 +253,9 @@ class UserController {
         return res.status(422).json(valid);
       }
 
-      const user = await User.updateUserByLogin(login, senha, nome, email, telefone)
+      const senhaHash = await User.encryptSenha(senha);
+
+      const user = await User.updateUserByLogin(login, senhaHash, nome, email, telefone)
       if (user === false) {
         return res.status(404).json({
           msg: 'Usuário não encontrado'
