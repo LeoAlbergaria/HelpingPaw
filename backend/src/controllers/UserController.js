@@ -143,7 +143,7 @@ class UserController {
       let numero = telefone.substr(2, 9);
 
       ddd = '(' + ddd + ') '
-      telefone = ddd + numero;
+      telefone = ddd + numero.substr(0, 5) + '-' + numero.substr(5, 4);
 
       const checkLogin = await User.loginExists(login);
       const checkEmail = await User.emailExists(email);
@@ -288,7 +288,7 @@ class UserController {
       let numero = telefone.substr(2, 9);
 
       ddd = '(' + ddd + ') '
-      telefone = ddd + numero;
+      telefone = ddd + numero.substr(0, 5) + '-' + numero.substr(5, 4);
 
       const senhaHash = await User.encryptSenha(senha);
 
