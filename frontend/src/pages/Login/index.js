@@ -27,6 +27,7 @@ export default function Login() {
 
             // localStorage.setItem('ongId', id);
             localStorage.setItem('userId', response.data.userId);
+            localStorage.setItem('login', response.data.login);
             localStorage.setItem('token', response.data.token);
 
             navigate("../home", { replace: true });

@@ -42,9 +42,7 @@
 }
 
 .profile-container header button:hover {
-    /* border-color: #E02041; */
     opacity: 1;
-    /* filter: brightness(50%); */
 }
 
 .profile-container h1 {
@@ -68,18 +66,27 @@
 
 .profile-container ul li strong {
     display: block;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     color: #41414d; 
 }
 
 .profile-container ul li p + strong {
-    margin-top: 32px;
+    margin-top: 16px;
 }
 
 .profile-container ul li p {
     color: #737380;
-    line-height: 21px;
+    line-height: 16px;
     font-size: 16px;
+    max-width: 380px;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 8px; /* fallback */
+    max-height: 64px; /* fallback */
+    -webkit-line-clamp: 2; /* number of lines to show */
+    -webkit-box-orient: vertical;
 }
 
 .profile-container ul .tags{
