@@ -42,7 +42,7 @@ class PostController {
    */
   async updatePost(req, res) {
     try {
-      const {
+      let {
         postId,
         titulo,
         descricao,
@@ -75,6 +75,9 @@ class PostController {
           msg: 'Insira typeTag no body'
         });
       }
+
+      titulo = titulo.trim();
+      descricao = descricao.trim();
 
       const post = await Post.updatePost(postId, descricao, titulo, typeTag, animalTag);
 
@@ -214,7 +217,7 @@ class PostController {
    */
   async createPost(req, res) {
     try {
-      const {
+      let {
         userId,
         descricao,
         titulo,
@@ -258,6 +261,9 @@ class PostController {
         console.log('Usuario nao encontrado');
         return false;
       }
+
+      titulo = titulo.trim();
+      descricao = descricao.trim();
 
       const post = await Post.createPost(userId, descricao, titulo, typeTag, animalTag);
 

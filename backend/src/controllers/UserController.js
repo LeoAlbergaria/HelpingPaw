@@ -109,7 +109,7 @@ class UserController {
 
   async createUser(req, res) {
     try {
-      const {
+      let {
         login,
         senha,
         confirmSenha,
@@ -122,6 +122,13 @@ class UserController {
       if (valid !== true) {
         return res.status(422).json(valid);
       }
+
+      login = login.trim();
+      nome = nome.trim();
+      senha = senha.trim();
+      confirmSenha = confirmSenha.trim();
+      email = email.trim();
+      telefone = telefone.trim();
 
       const checkLogin = await User.loginExists(login);
       const checkEmail = await User.emailExists(email);
@@ -239,7 +246,7 @@ class UserController {
 
   async updateUser(req, res) {
     try {
-      const {
+      let {
         login,
         senha,
         confirmSenha,
@@ -252,6 +259,13 @@ class UserController {
       if (valid !== true) {
         return res.status(422).json(valid);
       }
+
+      login = login.trim();
+      nome = nome.trim();
+      senha = senha.trim();
+      confirmSenha = confirmSenha.trim();
+      email = email.trim();
+      telefone = telefone.trim();
 
       const senhaHash = await User.encryptSenha(senha);
 
