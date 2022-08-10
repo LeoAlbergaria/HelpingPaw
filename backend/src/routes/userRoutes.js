@@ -25,10 +25,10 @@ router.post('/register/user', body('email').isEmail().withMessage("E-mail invál
 router.post('/auth/login', userController.authUser);
 
 // Rotas privadas
-router.get('/user/all', checkToken, userController.matchUserToken, userController.getOtherUsers);
+router.get('/user/all', checkToken, userController.getOtherUsers);
 
 // O login do usuário deve ser enviado pela URL
-router.get('/user/:login', checkToken, userController.matchUserToken, userController.getUser);
+router.get('/user/:login', checkToken, userController.getUser);
 router.put('/user/edit', checkToken, userController.matchUserToken, body('email').isEmail().withMessage("E-mail inválido"), body('telefone').custom(validateTelefone), checkForErrors, userController.updateUser);
 
 

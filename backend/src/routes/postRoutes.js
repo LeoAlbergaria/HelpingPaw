@@ -25,7 +25,7 @@ const router = new Router();
 
 router.get('/post/:postId', checkToken, postController.getPost);
 
-router.put('/user/updatePost', checkToken, userController.matchUserToken, postController.updatePost);
+router.put('/user/updatePost', checkToken, postController.updatePost);
 
 router.get('/posts', checkToken, postController.getAllPosts);
 
@@ -34,6 +34,6 @@ router.post('/user/newpost', checkToken, userController.matchUserToken, postCont
 
 router.get('/:login/posts', checkToken, postController.getUserPosts);
 
-router.delete('/post/:postId', checkToken, userController.matchUserToken, postController.deletePost);
+router.delete('/post/:postId', checkToken, postController.deletePost);
 
 module.exports = router;

@@ -30,6 +30,13 @@ class UserController {
           throw ('login precisa ser uma string');
         }
         userId = (await User.getUserByLogin(req.body.login))._id.toString();
+      } else if (req.params.login) {
+        if (typeof req.params.login !== 'string') {
+          throw ('login precisa ser uma string');
+        }
+        userId = (await User.getUserByLogin(req.params.login))._id.toString();
+      } else if (req.params.userId) {
+        userId = req.params.userId;
       } else {
         throw ('Inclua userId ou o login do usuario no body');
       }
