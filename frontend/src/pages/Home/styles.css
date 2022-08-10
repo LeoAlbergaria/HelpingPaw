@@ -45,9 +45,42 @@
     opacity: 1;
 }
 
-.profile-container h1 {
+/* .profile-container h1 {
     margin-top: 80px;
     margin-bottom: 24px;
+} */
+
+.profile-container .filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 32px 0;
+}
+
+.profile-container .filter h1 {
+    margin: 0;
+}
+
+.profile-container .filter .sortby {
+    display: flex;
+    align-items: center;
+}
+
+.profile-container .filter .sortby select{
+    border: 1px solid #ff9d5c;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-right: 4px;
+    background-color: #ffe1ce;
+}
+
+.profile-container .filter .sortby button{
+    border: 0;
+    color: white;
+    border-radius: 8px;
+    width: 100px;
+    margin-right: 0;
+    background-color: #ff9d5c;
 }
 
 .profile-container ul {

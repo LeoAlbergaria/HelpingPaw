@@ -103,11 +103,13 @@ export default function Home(){
  
                          <input placeholder="Nova senha"
                         value={senha}
+                        type="password"
                         onChange= { e => setSenha(e.target.value)}
                          />
  
                          <input placeholder="Repita senha"
                          value={confirmSenha}
+                         type="password"
                          onChange= { e => setConfirmSenha(e.target.value)}
                          />
  

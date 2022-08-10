@@ -61,11 +61,13 @@ export default function Register(){
                      <div className="input-group">
  
                          <input placeholder="Senha"
+                         type="password"
                         value={senha}
                         onChange= { e => setSenha(e.target.value)}
                          />
  
                          <input placeholder="Repita senha"
+                         type="password"
                          value={confirmSenha}
                          onChange= { e => setConfirmSenha(e.target.value)}
                          />

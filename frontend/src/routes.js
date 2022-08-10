@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import Post from './pages/Post';
 import NewPost from './pages/NewPost';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
@@ -15,6 +16,7 @@ export default function Paths() {
                 <Route path='/' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='/home' element={<Home />} />
+                <Route path='/post' element={<Post />} />
                 <Route path='/home/new' element={<NewPost />} />
                 <Route path='/profile' element={<Profile />} />
                 <Route path='*' element={<NotFound />} />
