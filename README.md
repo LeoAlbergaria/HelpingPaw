@@ -69,5 +69,24 @@ Esse servidor executa na porta 3001.
 ## 😸 Utilização
 Agora que está tudo pronto, basta acessar `http://localhost:3001` em seu navegador para começar a utilizar o hub.
 <p align="center">
-    <img src="frontend/src/assets/logo.png" width="80px" />
+    <img src="docs/images/logo.png" width="80px" />
+</p>
+
+### Features
+* Login com conta própria do sistema
+* Cadastro de uma nova conta
+<p align="center">
+    <img src="docs/images/cadastrologin.gif" width="55%" height="auto" />
+</p>
+
+* Visualizar e filtrar posts do sistema
+<p align="center">
+    <img src="docs/images/posts.gif" width="55%" height="auto" />
+</p>
+
+* Cadastrar um novo post
+* Alterar informações do usuário
+* Excluir posts
+<p align="center">
+    <img src="docs/images/novopostusuario.gif" width="55%" height="auto" />
 </p>
