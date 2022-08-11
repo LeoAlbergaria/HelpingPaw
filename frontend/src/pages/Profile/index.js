@@ -30,6 +30,10 @@ export default function Home(){
             }
         }).then(response => {
             setUser(response.data.user);
+            setLogin(response.data.user.login);
+            setNome(response.data.user.nome);
+            setEmail(response.data.user.email);
+            setTelefone(response.data.user.telefone);
         })
 
         api.get(`/${userLogin}/posts`, {
