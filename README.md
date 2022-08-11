@@ -59,7 +59,7 @@ Uma vez que se tenha o banco de dados, é necessário criar na pasta `./backend`
   # Enter front-end directory:
   $ cd frontend
   # Install the dependencies:
-  $ yarn
+  $ npm i
   # Run the aplication on development mode:
-  $ expo start
+  $ npm start
 ```
