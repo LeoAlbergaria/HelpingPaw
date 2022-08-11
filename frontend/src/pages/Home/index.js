@@ -38,26 +38,27 @@ export default function Home(){
         })
     }, [token, userLogin]);
 
-    async function handleFilter(e) {
+   
+    async function handleFilter(e){
         e.preventDefault();
 
         const data = {
             animalTag,
             typeTag,
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
         };
 
         try {
-            api.get('/posts', data).then(response => {
-                setPosts(response.data);
-                console.log(response.data);
+            const response = await api.post('/posts', data, {
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                }
             })
+            setPosts(response.data);
+            // navigate("../", { replace: true });
         } catch (err) {
-            alert('Falha no filtro, tente novamente.');
+            alert('Erro no filtro, tente novamente.');
         }
-    };
+    }
 
     function handleLogout () {
         localStorage.clear();
@@ -73,7 +74,7 @@ export default function Home(){
         <div className="profile-container">
             <header>
                 <img src={logo} alt="HelpingPaw" />
-                <span>Bem vinda, {user.nome}</span>
+                <span>Bem vindo/a, {user.nome}</span>
                 <Link className="profile-icon" to="/profile"><FiUser size={36} color="#ff9d5c" /></Link>
 
                 <Link className="button" to="/home/new">Cadastrar novo caso</Link>

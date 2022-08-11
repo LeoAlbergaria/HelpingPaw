@@ -49,7 +49,7 @@ export default function Profile(){
                 <section>
 
                     <h1>Cadastrar novo caso</h1>
-                    <p>Descreva o caso detalhadamente para encontrar um herói para reoslver isso.</p>
+                    <p>Descreva o caso detalhadamente para encontrar um herói para resolver isso ou ser o herói de alguém.</p>
                     <Link className="back-link" to="/home">
                         <FiArrowLeft size={16} color="#ff9d5c"/>
                         Voltar para home
