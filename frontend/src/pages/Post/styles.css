@@ -1,0 +1,81 @@
+.post-container {
+    width: 100%;
+    max-width: 1180px;
+    padding: 0 30px;
+    margin: 32px auto;
+}
+
+.post-container header {
+    display: flex;
+    align-items: center;
+}
+
+.post-container header strong {
+    font-size: 30px;
+    margin-left: 24px;
+}
+
+.post-container header img {
+    height: 64px;
+}
+
+.post-container header .back-arrow {
+    width: 36px;
+    margin-top: 0;
+    margin: auto;
+    margin-right: 0;
+}
+
+.post-container .content{
+    display: flex;  
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+    height: 80vh;
+}
+
+.post-container .content .dados {
+    width: 100%;
+    height: 100%;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
+    margin-right: 64px;
+}
+
+.post-container .content .dados h2{
+    margin-left: 16px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.post-container .content .dados p{
+    margin: 4px 0 4px 6px;
+    width: 100%;
+}
+
+.post-container .content .dados strong{
+    margin-left: 6px;
+}
+
+.post-container .content .dados .block{
+    background-color: white;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.post-container .content .dados .block .contato{
+    display: flex;
+    align-items: center;
+}
+
+.post-container .content img {
+    width: 70%;
+    height: 70%;
+    object-fit: cover;
+}
+
+.post-container .content .dados .block .tags p{
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+}
