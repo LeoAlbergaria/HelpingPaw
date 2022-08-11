@@ -1,4 +1,4 @@
-# HelpingPaw
+# HelpingPaw 🤝
 
 Desenvolvido por Christian State e Leonardo Albergaria.
 
@@ -28,7 +28,7 @@ E para o frontend:
 * npm
 
 ## 💻 Instalação
-Antes de tudo, é necessário clonar o repositório
+Antes de tudo, é necessário clonar o repositório:
 ```sh
 git clone https://github.com/LeoAlbergaria/HelpingPaw.git
 ```
@@ -53,6 +53,7 @@ Uma vez que se tenha o banco de dados, é necessário criar na pasta `./backend`
   # Executando a aplicação:
   $ npm start
 ```
+Esse servidor executa na porta 3000.
 
 ### 👁‍🗨 Inicializando o front-end
 ```bash
@@ -63,3 +64,10 @@ Uma vez que se tenha o banco de dados, é necessário criar na pasta `./backend`
   # Run the aplication on development mode:
   $ npm start
 ```
+Esse servidor executa na porta 3001.
+
+## 😸 Utilização
+Agora que está tudo pronto, basta acessar `http://localhost:3001` em seu navegador para começar a utilizar o hub.
+<p align="center">
+    <img src="frontend/src/assets/logo.png" width="80px" />
+</p>
