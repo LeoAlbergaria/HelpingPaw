@@ -27,6 +27,7 @@ router.get('/post/:postId', checkToken, postController.getPost);
 
 router.put('/user/updatePost', checkToken, postController.updatePost);
 
+router.post('/posts', checkToken, postController.getAllPosts);
 router.get('/posts', checkToken, postController.getAllPosts);
 
 router.post('/user/newpost', checkToken, userController.matchUserToken, postController.createPost);
