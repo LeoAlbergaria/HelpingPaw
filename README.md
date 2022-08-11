@@ -24,8 +24,8 @@ Para a intalação do backend você precisa ter instalado:
 * npm - v8.x.x
 
 E para o frontend:
-* reactjs
-* npm
+* reactjs - v18.x.x
+* npm - v8.x.x
 
 ## 💻 Instalação
 Antes de tudo, é necessário clonar o repositório:
