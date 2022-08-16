@@ -114,6 +114,14 @@ class UserController {
 
   }
 
+  /**
+   * Responde a requisição de criação de um usuário
+   * 
+   * @param {Object} req Requisição
+   * @param {Object} res Response
+   * @returns json com uma mensagem de erro e status 422 ou 500,
+   *  caso ocorra um erro. Senão, retorna status 201 com o usuário criado.
+   */
   async createUser(req, res) {
     try {
       let {
@@ -185,6 +193,16 @@ class UserController {
     }
   }
 
+  /**
+   * Responde requisição de autenticação de um usuário.
+   * Verifica o token enviado com a requisição.
+   * 
+   * @param {Object} req Requisição
+   * @param {Object} res Response
+   * @returns json com uma mensagem de erro e status 422, 404 ou 500,
+   *  caso ocorra um erro. Senão, retorna status 200 com o login e o userId
+   * do usuário autenticado, além de um Bearer token exclusivo e mensagem de sucesso.
+   */
   async authUser(req, res) {
     try {
       const {
@@ -235,6 +253,15 @@ class UserController {
     }
   }
 
+  /**
+   * Responde requisição de consulta a um usuário por login enviado
+   * pela URL.
+   * 
+   * @param {Object} req Requisição
+   * @param {Object} res Response
+   * @returns json com status 404 ou 500 com mensagem de erro caso ocorra,
+   * senão retorna status 202 com o usuário.
+   */
   async getUser(req, res) {
     try {
       // Enviado da URL
@@ -259,6 +286,15 @@ class UserController {
     }
   }
 
+  /**
+   * Atualiza as informações de um usuário no banco de acordo com as
+   * informações enviadas no body da requisição.
+   * 
+   * @param {Object} req Requisição
+   * @param {Object} res Response
+   * @returns json com status 404, 422 ou 500 com mensagem de erro caso ocorra,
+   * senão retorna userId e mensagem de sucesso.
+   */
   async updateUser(req, res) {
     try {
       let {
