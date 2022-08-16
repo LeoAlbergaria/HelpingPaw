@@ -7,34 +7,21 @@ const {
     checkToken
 } = require('../middlewares/tokenMiddlewares');
 
-// const {
-//     handleImage
-// } = require('../middlewares/imageMiddlewares');
-
-
-// const multer = require('multer');
-// // Diretório para salvar temporariamente as imagens
-// const destTempDir = "temp"
-// // Caminho temporário completo
-// const destTempPath = `./${destTempDir}`
-// const upload = multer({
-//     dest: destTempPath
-// })
-
 const router = new Router();
 
+// Consulta um post pelo ID
 router.get('/post/:postId', checkToken, postController.getPost);
-
+// Atualiza as informações de um post
 router.put('/user/updatePost', checkToken, postController.updatePost);
-
+// Consulta todos os posts cadastrados, filtrados por tags
 router.post('/posts', checkToken, postController.getAllPosts);
+// Consulta todos os posts cadastrados, sem filtros de tags
 router.get('/posts', checkToken, postController.getAllPosts);
-
+// Cadastra um novo post no sistema
 router.post('/user/newpost', checkToken, userController.matchUserToken, postController.createPost);
-// router.post('/user/newpost', checkToken, upload.single('image'), handleImage, postController.createPost);
-
+// Consulta os posts de um usuário
 router.get('/:login/posts', checkToken, postController.getUserPosts);
-
+// Deleta os posts de um usuário
 router.delete('/post/:postId', checkToken, postController.deletePost);
 
 module.exports = router;

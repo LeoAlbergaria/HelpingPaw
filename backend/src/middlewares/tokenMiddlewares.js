@@ -1,5 +1,15 @@
 const jwt = require('jsonwebtoken');
 
+/**
+ * Verifica a validade de um Bearer token enviado pelo header da
+ * requisição. 
+ * 
+ * @param {Object} req Requisição
+ * @param {Object} res Response
+ * @param {function} next Função de callback
+ * @returns status 401, 400 ou 500 com uma mensagem de erro caso ocorra,
+ * senão apenas chama a função passada pelo next como callback.
+ */
 function checkToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(" ")[1];
